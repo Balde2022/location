@@ -9,6 +9,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Date;
+
 @Configuration
 public class AuthenticationService {
     private final UserRepository repository;
@@ -29,8 +31,11 @@ public class AuthenticationService {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setCreated_at(request.getCreated_at());
-        user.setUpdated_at(request.getUpdated_at());
+        Date date = new Date();
+        user.setCreated_at(date);
+        user.setUpdated_at(date);
+
+
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         user = repository.save(user);
