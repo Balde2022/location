@@ -6,6 +6,9 @@ import com.ocprojecttree.location.Services.Jwt.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 public class UserController {
     private final AuthenticationService authService;
@@ -22,5 +25,15 @@ public class UserController {
     @PostMapping("/login")
     public  ResponseEntity<AuthenticationResponse> login(@RequestBody User request){
         return ResponseEntity.ok(authService.authenticate(request));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<List<User>> me(){
+        return ResponseEntity.ok(authService.loadAllUsers());
+    }
+
+    @GetMapping("/meByEmail")
+    public  ResponseEntity<Optional<User>> me(String email){
+        return ResponseEntity.ok(authService.loadUserByEmail(email));
     }
 }

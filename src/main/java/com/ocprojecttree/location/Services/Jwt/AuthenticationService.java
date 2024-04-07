@@ -10,6 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Configuration
 public class AuthenticationService {
@@ -34,8 +36,6 @@ public class AuthenticationService {
         Date date = new Date();
         user.setCreated_at(date);
         user.setUpdated_at(date);
-
-
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         user = repository.save(user);
@@ -54,5 +54,13 @@ public class AuthenticationService {
         String token = jwtService.generateToken(user);
 
         return  new AuthenticationResponse(token);
+    }
+
+    public Optional<User> loadUserByEmail(String email){
+        return repository.findByEmail(email);
+    }
+
+    public List<User> loadAllUsers(){
+        return repository.findAll();
     }
 }
