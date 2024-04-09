@@ -20,4 +20,8 @@ logging:
   level:
     root: error
     com.ocprojecttree.location: info
+server:
+  servlet:
+    context: /api
+
 

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(path = "/api/auth")
 public class UserController {
     private final AuthenticationService authService;
 
@@ -36,4 +37,10 @@ public class UserController {
     public  ResponseEntity<Optional<User>> me(String email){
         return ResponseEntity.ok(authService.loadUserByEmail(email));
     }
+
+    @GetMapping(path = "/test")
+    public String demo(){
+        return "Bonjour";
+    }
+
 }
