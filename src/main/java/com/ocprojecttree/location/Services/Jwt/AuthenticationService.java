@@ -2,6 +2,8 @@ package com.ocprojecttree.location.Services.Jwt;
 
 import com.ocprojecttree.location.Models.Users.AuthenticationResponse;
 import com.ocprojecttree.location.Models.Users.User;
+import com.ocprojecttree.location.Models.Users.UserDto.LoginRequest;
+import com.ocprojecttree.location.Models.Users.UserDto.RegisterRequest;
 import com.ocprojecttree.location.Repository.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +31,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(User request){
+    public AuthenticationResponse register(RegisterRequest request){
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
@@ -37,13 +39,12 @@ public class AuthenticationService {
         user.setCreated_at(date);
         user.setUpdated_at(date);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-
         user = repository.save(user);
         String token = jwtService.generateToken(user);
         return new AuthenticationResponse(token);
     }
 
-    public AuthenticationResponse authenticate(User request){
+    public AuthenticationResponse authenticate(LoginRequest request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail() ,

@@ -23,5 +23,6 @@ logging:
 server:
   servlet:
     context: /api
-
+springdoc:
+  pathsToMatch: /api/**
 
